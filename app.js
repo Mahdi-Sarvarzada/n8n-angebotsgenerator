@@ -1,4 +1,4 @@
-const WEBHOOK_URL = "https://n8n.srv1635149.hstgr.cloud/webhook/ee488a52-f293-48a9-af09-1fe3782fd789";
+const WEBHOOK_URL = "/api/angebot";
 
 const form          = document.getElementById("angebotsform");
 const submitBtn     = document.getElementById("submitBtn");
