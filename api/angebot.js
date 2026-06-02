@@ -19,5 +19,12 @@ export default async function handler(req, res) {
   }
 
   const text = await n8nRes.text();
-  res.status(200).send(text);
+
+  try {
+    const json = JSON.parse(text);
+    const markdown = json.formattedQuote ?? json.output ?? json.text ?? text;
+    return res.status(200).send(markdown);
+  } catch {
+    return res.status(200).send(text);
+  }
 }
