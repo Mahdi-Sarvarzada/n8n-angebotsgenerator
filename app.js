@@ -41,7 +41,13 @@ async function generiereAngebot(daten) {
     body: JSON.stringify(daten),
   });
   if (!res.ok) throw new Error(`Webhook antwortete mit Status ${res.status}`);
-  return res.text();
+  const text = await res.text();
+  try {
+    const json = JSON.parse(text);
+    return json.formattedQuote ?? json.output ?? json.text ?? text;
+  } catch {
+    return text;
+  }
 }
 
 function validiere(daten) {

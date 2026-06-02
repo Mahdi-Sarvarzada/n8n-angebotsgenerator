@@ -8,10 +8,12 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "WEBHOOK_URL nicht konfiguriert" });
   }
 
+  const body = typeof req.body === "string" ? req.body : JSON.stringify(req.body);
+
   const n8nRes = await fetch(webhookUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(req.body),
+    body,
   });
 
   if (!n8nRes.ok) {
