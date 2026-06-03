@@ -73,7 +73,7 @@ function versteckeFehler() {
 
 function zeigeErgebnis(markdown, daten) {
   const datum = new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" });
-  resultMetaEl.textContent = `${daten.kundentyp} · ${daten.stunden} Std. · ${datum}`;
+  resultMetaEl.textContent = `${daten["Client Type"]} · ${daten["Estimated Hours"]} Std. · ${datum}`;
   angebotsEl.innerHTML = marked.parse(markdown);
   ergebnisEl.classList.remove("hidden");
   ergebnisEl.scrollIntoView({ behavior: "smooth", block: "start" });

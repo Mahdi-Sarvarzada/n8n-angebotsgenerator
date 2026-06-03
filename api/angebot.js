@@ -8,7 +8,20 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "WEBHOOK_URL nicht konfiguriert" });
   }
 
-  const body = typeof req.body === "string" ? req.body : JSON.stringify(req.body);
+  // Read raw body from stream in case auto-parsing fails
+  let body;
+  if (req.body && typeof req.body === "object" && Object.keys(req.body).length > 0) {
+    body = JSON.stringify(req.body);
+  } else {
+    body = await new Promise((resolve, reject) => {
+      let data = "";
+      req.on("data", chunk => { data += chunk; });
+      req.on("end", () => resolve(data));
+      req.on("error", reject);
+    });
+  }
+
+  console.log("Body gesendet an n8n:", body);
 
   const n8nRes = await fetch(webhookUrl, {
     method: "POST",
@@ -21,6 +34,7 @@ export default async function handler(req, res) {
   }
 
   const text = await n8nRes.text();
+  console.log("Antwort von n8n:", text);
 
   try {
     const json = JSON.parse(text);
