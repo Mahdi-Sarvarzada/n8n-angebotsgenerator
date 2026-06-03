@@ -13,9 +13,9 @@ form.addEventListener("submit", async (e) => {
   versteckeFehler();
 
   const daten = {
-    projektbeschreibung: form.projektbeschreibung.value.trim(),
-    stunden: Number(form.stunden.value),
-    kundentyp: form.kundentyp.value,
+    "Project Description": form.projektbeschreibung.value.trim(),
+    "Estimated Hours": Number(form.stunden.value),
+    "Client Type": form.kundentyp.value,
   };
 
   const fehler = validiere(daten);
@@ -51,9 +51,9 @@ async function generiereAngebot(daten) {
 }
 
 function validiere(daten) {
-  if (!daten.projektbeschreibung) return "Bitte eine Projektbeschreibung eingeben.";
-  if (!daten.stunden || daten.stunden < 1) return "Bitte eine gültige Stundenanzahl (mindestens 1) eingeben.";
-  if (!daten.kundentyp) return "Bitte einen Kundentyp auswählen.";
+  if (!daten["Project Description"]) return "Bitte eine Projektbeschreibung eingeben.";
+  if (!daten["Estimated Hours"] || daten["Estimated Hours"] < 1) return "Bitte eine gültige Stundenanzahl (mindestens 1) eingeben.";
+  if (!daten["Client Type"]) return "Bitte einen Kundentyp auswählen.";
   return null;
 }
 
